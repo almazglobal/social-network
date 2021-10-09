@@ -1,0 +1,8 @@
+.content {
+    grid-area: content;
+}
+
+.content img {
+    /*width: 100%;*/
+    /*height: 100px;*/
+}
