@@ -7,24 +7,14 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
+import React from "react";
+import {StateType} from "./store/state";
 
-export type UsersType = {
-    name: string
-    id: string
+type AppPropsType = {
+    state: StateType
 }
 
-export type MessageUserType = {
-    text: string
-    id: string
-}
-
-export type PostUserType = {
-    text: string
-    id: string
-    countLikes: number
-}
-
-function App() {
+const  App: React.FC<AppPropsType> = ({state}) => {
 
     return (
         <BrowserRouter>
@@ -32,11 +22,11 @@ function App() {
                 <Header/>
                 <Navbar/>
                 <div className={styles.content}>
-                    <Route path={"/dialogs"} component={Dialogs}/>
-                    <Route path={"/profile"} component={Profile}/>
-                    <Route path={"/news"} component={News}/>
-                    <Route path={"/music"} component={Music}/>
-                    <Route path={"/settings"} component={Settings}/>
+                    <Route path={"/dialogs"} render={()=> <Dialogs state={state.dialogsPage}/>}/>
+                    <Route path={"/profile"} render={()=> <Profile state={state.profilePage}/>}/>
+                    <Route path={"/news"} render={()=> <News />}/>
+                    <Route path={"/music"} render={()=> <Music />}/>
+                    <Route path={"/settings"} render={()=> <Settings />}/>
                 </div>
 
                 {/*<Profile />*/}

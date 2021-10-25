@@ -1,14 +1,13 @@
 import React from 'react';
 import Post from "./Post/Post";
 import styles from './MyPosts.module.css'
-import {PostUserType} from "../../../App";
+import {PostUserType} from "../../../store/state";
 
-const MyPosts = () => {
+type MyPostsPropsType = {
+    posts: PostUserType[]
+}
 
-    const posts: PostUserType[] = [
-        {id: '1', text: 'My first post', countLikes: 122},
-        {id: '2', text: 'React rules!', countLikes: 100500}
-    ]
+const MyPosts: React.FC<MyPostsPropsType> = ({posts}) => {
 
     return (
         <div className={styles.postsWrapper}>
@@ -22,7 +21,9 @@ const MyPosts = () => {
                 </div>
             </div>
             <div className={styles.posts}>
-                <Post posts={posts} />
+                {
+                    posts.map((item =>  <Post text={item.text} countLikes={item.countLikes} id={item.id} />))
+                }
             </div>
 
         </div>

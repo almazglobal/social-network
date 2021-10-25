@@ -1,15 +1,9 @@
 import React from "react";
 import styles from "../Message/Message.module.css";
-import {MessageUserType} from "../../../App";
+import {MessageUserType} from "../../../store/state";
 
-type MessagePropsType = {
-    messages: MessageUserType[]
-}
-export const Message: React.FC<MessagePropsType> = ({messages}) => {
-    return <>
-        {messages.map(item => {
-            return <div key={item.id}
-                        className={styles.message}>{item.text}</div>
-        })}
-    </>
+export const Message: React.FC<MessageUserType> = ({text, id}) => {
+    return <div key={id}
+                className={styles.message}>{text}</div>
+
 }

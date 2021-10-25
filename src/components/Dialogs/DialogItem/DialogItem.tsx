@@ -1,22 +1,12 @@
 import React from "react";
 import styles from "../DialogItem/DialogItem.module.css";
 import {NavLink} from "react-router-dom";
-import {UsersType} from "../../../App";
+import {UsersType} from "../../../store/state";
 
-export type DialogItemType = {
-    users: UsersType[]
-}
-export const DialogItem: React.FC<DialogItemType> = ({users}) => {
-
-    return <>
-        {users.map(item => {
-                return (
-                    <div key={item.id}
-                         className={styles.dialog}>
-                        <NavLink to={`${/dialogs/}${item.id}`}
-                                 activeClassName={styles.active}>{item.name}</NavLink>
-                    </div>
-                )}
-        )}
-    </>
+export const DialogItem: React.FC<UsersType> = ({id, name}) => {
+    return <div key={id}
+                className={styles.dialog}>
+        <NavLink to={`${/dialogs/}${id}`}
+                 activeClassName={styles.active}>{name}</NavLink>
+    </div>
 }

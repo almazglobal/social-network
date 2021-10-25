@@ -2,34 +2,33 @@ import React from 'react'
 import styles from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {MessageUserType, UsersType} from "../../App";
+import {MessageUserType, UsersType} from "../../store/state";
 
-// type DialogsPropsType = {
-//     users: UsersType[]
-// }
+export type DialogTypeProps = {
+    state: {
+        users: UsersType[]
+        messages:  MessageUserType[]
+    }
+}
 
-export const Dialogs = () => {
+export const Dialogs: React.FC<DialogTypeProps> = ({state}) => {
 
-    const users: UsersType[] = [
-        {id: '1', name: 'Alex'},
-        {id: '2',  name: 'Sasha'},
-        {id: '3',  name: 'Bob'},
-    ]
-
-    const messages: MessageUserType[] = [
-        {id: '1', text: 'Hello'},
-        {id: '2',  text: 'Yo'},
-        {id: '3',  text: 'Bye'},
-    ]
 
 
     return (
         <div className={styles.dialogs}>
             <div className={styles.dialogsItems}>
-               <DialogItem users={users} />
+                {
+                    state.users.map(item => <DialogItem name={item.name}
+                                                  id={item.id} />)
+                }
+
             </div>
             <div className={styles.messages}>
-               <Message messages={messages} />
+                {
+                    state.messages.map(item => <Message text={item.text}
+                                                  id={item.id} />)
+                }
             </div>
         </div>
     )
