@@ -22,6 +22,9 @@ export type StateType = {
         users: UsersType[]
         messages: MessageUserType[]
     }
+    sidebar: {
+        friends: UsersType[]
+    }
 }
 
 const posts: PostUserType[] = [
@@ -33,6 +36,11 @@ const users: UsersType[] = [
     {id: '1', name: 'Alex'},
     {id: '2', name: 'Sasha'},
     {id: '3', name: 'Bob'},
+]
+
+const friends: UsersType[] = [
+    {id: '1', name: 'Alex'},
+    {id: '2', name: 'Sasha'},
 ]
 
 const messages: MessageUserType[] = [
@@ -49,4 +57,7 @@ export const state: StateType = {
         users,
         messages,
     },
+    sidebar: {
+        friends,
+    }
 }
