@@ -1,3 +1,5 @@
+import {reRenderEntireTree} from "../render";
+
 export type UsersType = {
     name: string
     id: string
@@ -49,7 +51,7 @@ const messages: MessageUserType[] = [
     {id: '3', text: 'Bye'},
 ]
 
-export const state: StateType = {
+export let state: StateType = {
     profilePage: {
         posts,
     },
@@ -60,4 +62,15 @@ export const state: StateType = {
     sidebar: {
         friends,
     }
+}
+
+export let addPost = (textPost: string) => {
+    const newPost = {
+        id: state.profilePage.posts.length.toString(),
+        text: textPost,
+        countLikes: 0,
+    }
+    // state = {...state, profilePage: {posts: [...posts, newPost]}}
+    state.profilePage.posts.push(newPost)
+    reRenderEntireTree(state)
 }

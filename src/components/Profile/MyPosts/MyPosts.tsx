@@ -1,19 +1,27 @@
-import React, {LegacyRef, useRef} from 'react';
+import React, {ChangeEvent, LegacyRef, useRef, useState} from 'react';
 import Post from "./Post/Post";
 import styles from './MyPosts.module.css'
 import {PostUserType} from "../../../store/state";
 
 type MyPostsPropsType = {
     posts: PostUserType[]
+    addPost: (textPost: string) => void
 }
 
-const MyPosts: React.FC<MyPostsPropsType> = ({posts}) => {
+const MyPosts: React.FC<MyPostsPropsType> = ({posts, addPost}) => {
 
     let newPostElement = React.createRef<HTMLTextAreaElement>();
+    const [textPost, setTextPost] = useState('')
+    const addPostHandler = () => {
+        // const text = newPostElement.current?.value
+        if (textPost) {
+            addPost(textPost)
+            setTextPost('')
+        }
+    }
 
-    const addPost = () => {
-        const text = newPostElement.current?.value
-        alert(text)
+    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setTextPost(e.currentTarget.value)
     }
 
     return (
@@ -21,15 +29,19 @@ const MyPosts: React.FC<MyPostsPropsType> = ({posts}) => {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea ref={newPostElement}
+                              value={textPost}
+                              onChange={onChangeHandler} />
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={addPostHandler}>Add post</button>
                 </div>
             </div>
             <div className={styles.posts}>
                 {
-                    posts.map((item =>  <Post text={item.text} countLikes={item.countLikes} id={item.id} />))
+                    posts.map((item => <Post text={item.text}
+                                             countLikes={item.countLikes}
+                                             id={item.id} />))
                 }
             </div>
 
