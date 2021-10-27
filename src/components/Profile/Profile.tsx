@@ -1,10 +1,10 @@
 import React from 'react'
 import MyPosts from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {PostUserType, StoreType} from "../../store/store";
+import {AppStoreType} from "../../store/redux-store";
 
 export type ProfilePropsType = {
-    store: StoreType
+    store: AppStoreType
 }
 const Profile: React.FC<ProfilePropsType> = ({store}) => {
 

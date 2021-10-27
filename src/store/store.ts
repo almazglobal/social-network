@@ -54,6 +54,7 @@ const messages: MessageUserType[] = [
     {id: '3', text: 'Bye'},
 ]
 
+/*
 const state: StateType = {
     profilePage: {
         posts,
@@ -92,4 +93,5 @@ export const store: StoreType = {
         this._callSubscriber(this._state)
     },
 }
+*/
 

@@ -8,11 +8,11 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import React from "react";
-import {StateType, StoreType} from "./store/store";
 import {Navbar} from "./components/Navbar/Navbar";
+import {AppStoreType} from "./store/redux-store";
 
 type AppPropsType = {
-    store: StoreType
+    store: AppStoreType
 }
 
 const  App: React.FC<AppPropsType> = ({store}) => {

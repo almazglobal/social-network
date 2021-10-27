@@ -2,11 +2,11 @@ import React, {ChangeEvent, useState} from 'react'
 import styles from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {StoreType} from "../../store/store";
 import {sendMessageAC} from "../../store/dialogs-reducer";
+import {AppStoreType} from "../../store/redux-store";
 
 export type DialogTypeProps = {
-    store: StoreType
+    store: AppStoreType
 }
 
 export const Dialogs: React.FC<DialogTypeProps> = ({store}) => {

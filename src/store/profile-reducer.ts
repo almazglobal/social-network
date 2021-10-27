@@ -1,4 +1,4 @@
-import {MessageUserType, PostUserType, StateType} from "./store";
+import {PostUserType} from "./store";
 
 const ADD_POST = 'ADD_POST';
 
@@ -10,7 +10,14 @@ type AddPostACType = (payload: string) => AddPostAction
 
 export const addPostAC: AddPostACType = (payload) => ({type: ADD_POST, payload})
 
-export const profileReducer = (state: { posts: PostUserType[] }, action: AddPostAction) => {
+const initState = {
+    posts:  [
+        {id: '1', text: 'My first post', countLikes: 122},
+        {id: '2', text: 'React rules!', countLikes: 100500}
+    ]
+}
+
+export const profileReducer = (state = initState, action: AddPostAction): typeof initState => {
     switch (action.type) {
         case ADD_POST: {
             const newPost: PostUserType = {

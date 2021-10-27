@@ -1,11 +1,11 @@
-import React, {ChangeEvent, LegacyRef, useRef, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import Post from "./Post/Post";
 import styles from './MyPosts.module.css'
-import {PostUserType, StoreType} from "../../../store/store";
 import {addPostAC} from "../../../store/profile-reducer";
+import {AppStoreType} from "../../../store/redux-store";
 
 type MyPostsPropsType = {
-    store: StoreType
+    store: AppStoreType
 }
 
 const MyPosts: React.FC<MyPostsPropsType> = ({store}) => {

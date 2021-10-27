@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './Navbar.module.css'
 import {NavLink} from 'react-router-dom'
-import {StoreType} from "../../store/store";
 import {Friends} from "../Friends/Friends";
+import {AppStoreType} from "../../store/redux-store";
 
 type NavbarPropsType = {
-   store: StoreType
+   store: AppStoreType
 }
 
 export const Navbar: React.FC<NavbarPropsType> = ({store}) => {

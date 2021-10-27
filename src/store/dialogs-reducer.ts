@@ -1,4 +1,4 @@
-import {MessageUserType, StateType, UsersType} from "./store";
+import {MessageUserType} from "./store";
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
 
@@ -12,10 +12,20 @@ type SendMessageACType = (payload: string) => SendMessageAction
 
 export const sendMessageAC: SendMessageACType = (payload) => ({type: SEND_MESSAGE, payload})
 
-export const dialogsReducer = (state: {
-    users: UsersType[]
-    messages: MessageUserType[]
-}, action: SendMessageAction) => {
+const initState = {
+    messages: [
+        {id: '1', text: 'Hello'},
+        {id: '2', text: 'Yo'},
+        {id: '3', text: 'Bye'},
+    ],
+    users: [
+    {id: '1', name: 'Alex'},
+    {id: '2', name: 'Sasha'},
+    {id: '3', name: 'Bob'},
+    ]
+}
+
+export const dialogsReducer = (state = initState, action: SendMessageAction): typeof  initState => {
     switch (action.type) {
         case SEND_MESSAGE: {
             const newMessage: MessageUserType = {
