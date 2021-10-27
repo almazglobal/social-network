@@ -1,4 +1,5 @@
-import {reRenderEntireTree} from "../render";
+const ADD_POST = 'ADD_POST';
+const SEND_MESSAGE = 'SEND_MESSAGE';
 
 export type UsersType = {
     name: string
@@ -51,7 +52,7 @@ const messages: MessageUserType[] = [
     {id: '3', text: 'Bye'},
 ]
 
-export let state: StateType = {
+const state: StateType = {
     profilePage: {
         posts,
     },
@@ -64,13 +65,64 @@ export let state: StateType = {
     }
 }
 
-export let addPost = (textPost: string) => {
-    const newPost = {
-        id: state.profilePage.posts.length.toString(),
-        text: textPost,
-        countLikes: 0,
-    }
-    // state = {...state, profilePage: {posts: [...posts, newPost]}}
-    state.profilePage.posts.push(newPost)
-    reRenderEntireTree(state)
+export type StoreType = {
+    _state: StateType
+    _callSubscriber: (state: StateType) => void
+    subscribe: (observer: (state: StateType) => void) => void
+    getState: () => StateType
+    dispatch: (action: { type: string, payload: any }) => void
 }
+
+export const store: StoreType = {
+    _state: state,
+    _callSubscriber(state) {
+    },
+    subscribe(observer) {
+        this._callSubscriber = observer
+    },
+    getState() {
+        return this._state;
+    },
+    dispatch(action) {
+        switch (action.type) {
+            case ADD_POST: {
+                const newPost: PostUserType = {
+                    id: this._state.profilePage.posts.length.toString(),
+                    text: action.payload,
+                    countLikes: 0,
+                }
+                this._state.profilePage.posts.push(newPost)
+                this._callSubscriber(this._state)
+                break
+            }
+            case SEND_MESSAGE: {
+                const newMessage: MessageUserType = {
+                    id: this._state.dialogsPage.messages.length.toString(),
+                    text: action.payload,
+                }
+                this._state.dialogsPage.messages.push(newMessage)
+                this._callSubscriber(this._state)
+                break
+            }
+        }
+    },
+}
+
+export type AddPostAction = {
+    type: string
+    payload: string
+}
+type AddPostACType = (payload: string) => AddPostAction
+
+export const addPostAC
+    :
+    AddPostACType = (payload) => ({type: ADD_POST, payload})
+
+export type SendMessageAction = {
+    type: string
+    payload: string
+}
+
+type SendMessageACType = (payload: string) => SendMessageAction
+
+export const addMessageAC: SendMessageACType = (payload) => ({type: SEND_MESSAGE, payload})

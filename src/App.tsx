@@ -13,10 +13,10 @@ import {Navbar} from "./components/Navbar/Navbar";
 
 type AppPropsType = {
     state: StateType
-    addPost: (textPost: string) => void
+    dispatch: (action: {type: string, payload: any}) => void
 }
 
-const  App: React.FC<AppPropsType> = ({state, addPost}) => {
+const  App: React.FC<AppPropsType> = ({state, dispatch}) => {
 
     return (
 
@@ -24,8 +24,8 @@ const  App: React.FC<AppPropsType> = ({state, addPost}) => {
                 <Header/>
                 <Navbar state={state.sidebar}/>
                 <div className={styles.content}>
-                    <Route path={"/dialogs"} render={()=> <Dialogs state={state.dialogsPage}/>}/>
-                    <Route path={"/profile"} render={()=> <Profile state={state.profilePage} addPost={addPost}/>}/>
+                    <Route path={"/dialogs"} render={()=> <Dialogs state={state.dialogsPage} dispatch={dispatch}/>}/>
+                    <Route path={"/profile"} render={()=> <Profile state={state.profilePage} dispatch={dispatch}/>}/>
                     <Route path={"/news"} render={()=> <News />}/>
                     <Route path={"/music"} render={()=> <Music />}/>
                     <Route path={"/settings"} render={()=> <Settings />}/>

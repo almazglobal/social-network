@@ -1,21 +1,21 @@
 import React, {ChangeEvent, LegacyRef, useRef, useState} from 'react';
 import Post from "./Post/Post";
 import styles from './MyPosts.module.css'
-import {PostUserType} from "../../../store/state";
+import {addPostAC, PostUserType} from "../../../store/state";
 
 type MyPostsPropsType = {
     posts: PostUserType[]
-    addPost: (textPost: string) => void
+    dispatch: (action: {type: string, payload: any}) => void
 }
 
-const MyPosts: React.FC<MyPostsPropsType> = ({posts, addPost}) => {
+const MyPosts: React.FC<MyPostsPropsType> = ({posts, dispatch}) => {
 
     let newPostElement = React.createRef<HTMLTextAreaElement>();
     const [textPost, setTextPost] = useState('')
     const addPostHandler = () => {
         // const text = newPostElement.current?.value
         if (textPost) {
-            addPost(textPost)
+            dispatch(addPostAC(textPost))
             setTextPost('')
         }
     }

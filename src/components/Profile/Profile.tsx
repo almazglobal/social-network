@@ -7,14 +7,14 @@ export type ProfilePropsType = {
     state: {
         posts: PostUserType[]
     }
-    addPost: (textPost: string) => void
+    dispatch: (action: {type: string, payload: any}) => void
 
 }
-const Profile: React.FC<ProfilePropsType> = ({state, addPost}) => {
+const Profile: React.FC<ProfilePropsType> = ({state, dispatch}) => {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts posts={state.posts} addPost={addPost} />
+            <MyPosts posts={state.posts} dispatch={dispatch} />
         </div>
     )
 }
