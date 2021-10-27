@@ -1,5 +1,7 @@
-const ADD_POST = 'ADD_POST';
-const SEND_MESSAGE = 'SEND_MESSAGE';
+import {profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialogs-reducer";
+import {sidebarReducer} from "./sidebar-reducer";
+
 
 export type UsersType = {
     name: string
@@ -84,45 +86,10 @@ export const store: StoreType = {
         return this._state;
     },
     dispatch(action) {
-        switch (action.type) {
-            case ADD_POST: {
-                const newPost: PostUserType = {
-                    id: this._state.profilePage.posts.length.toString(),
-                    text: action.payload,
-                    countLikes: 0,
-                }
-                this._state.profilePage.posts.push(newPost)
-                this._callSubscriber(this._state)
-                break
-            }
-            case SEND_MESSAGE: {
-                const newMessage: MessageUserType = {
-                    id: this._state.dialogsPage.messages.length.toString(),
-                    text: action.payload,
-                }
-                this._state.dialogsPage.messages.push(newMessage)
-                this._callSubscriber(this._state)
-                break
-            }
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.sidebar =  sidebarReducer(this._state.sidebar, action)
+        this._callSubscriber(this._state)
     },
 }
 
-export type AddPostAction = {
-    type: string
-    payload: string
-}
-type AddPostACType = (payload: string) => AddPostAction
-
-export const addPostAC
-    :
-    AddPostACType = (payload) => ({type: ADD_POST, payload})
-
-export type SendMessageAction = {
-    type: string
-    payload: string
-}
-
-type SendMessageACType = (payload: string) => SendMessageAction
-
-export const addMessageAC: SendMessageACType = (payload) => ({type: SEND_MESSAGE, payload})

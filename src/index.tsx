@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {StateType, store, StoreType} from "./store/state";
+import {StateType, StoreType} from "./store/store";
 import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+import {store} from "./store/redux-store";
 
 
 const reRenderEntireTree = (state: StateType) => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App state={store.getState()}
-                     dispatch={store.dispatch.bind(store)} />
+                <App store={store} />
             </BrowserRouter>
         </React.StrictMode>,
         document.getElementById('root')

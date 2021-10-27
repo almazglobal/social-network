@@ -8,24 +8,25 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import React from "react";
-import {StateType} from "./store/state";
+import {StateType, StoreType} from "./store/store";
 import {Navbar} from "./components/Navbar/Navbar";
 
 type AppPropsType = {
-    state: StateType
-    dispatch: (action: {type: string, payload: any}) => void
+    store: StoreType
 }
 
-const  App: React.FC<AppPropsType> = ({state, dispatch}) => {
+const  App: React.FC<AppPropsType> = ({store}) => {
+
+    const state = store.getState()
 
     return (
 
             <div className={styles.appWrapper}>
                 <Header/>
-                <Navbar state={state.sidebar}/>
+                <Navbar store={store}/>
                 <div className={styles.content}>
-                    <Route path={"/dialogs"} render={()=> <Dialogs state={state.dialogsPage} dispatch={dispatch}/>}/>
-                    <Route path={"/profile"} render={()=> <Profile state={state.profilePage} dispatch={dispatch}/>}/>
+                    <Route path={"/dialogs"} render={()=> <Dialogs store={store}/>}/>
+                    <Route path={"/profile"} render={()=> <Profile store={store}/>}/>
                     <Route path={"/news"} render={()=> <News />}/>
                     <Route path={"/music"} render={()=> <Music />}/>
                     <Route path={"/settings"} render={()=> <Settings />}/>

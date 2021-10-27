@@ -1,21 +1,22 @@
 import React, {ChangeEvent, LegacyRef, useRef, useState} from 'react';
 import Post from "./Post/Post";
 import styles from './MyPosts.module.css'
-import {addPostAC, PostUserType} from "../../../store/state";
+import {PostUserType, StoreType} from "../../../store/store";
+import {addPostAC} from "../../../store/profile-reducer";
 
 type MyPostsPropsType = {
-    posts: PostUserType[]
-    dispatch: (action: {type: string, payload: any}) => void
+    store: StoreType
 }
 
-const MyPosts: React.FC<MyPostsPropsType> = ({posts, dispatch}) => {
+const MyPosts: React.FC<MyPostsPropsType> = ({store}) => {
 
+    const posts = store.getState().profilePage.posts
     let newPostElement = React.createRef<HTMLTextAreaElement>();
     const [textPost, setTextPost] = useState('')
     const addPostHandler = () => {
-        // const text = newPostElement.current?.value
+
         if (textPost) {
-            dispatch(addPostAC(textPost))
+            store.dispatch(addPostAC(textPost))
             setTextPost('')
         }
     }

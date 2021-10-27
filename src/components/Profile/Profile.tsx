@@ -1,20 +1,17 @@
 import React from 'react'
 import MyPosts from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {PostUserType} from "../../store/state";
+import {PostUserType, StoreType} from "../../store/store";
 
 export type ProfilePropsType = {
-    state: {
-        posts: PostUserType[]
-    }
-    dispatch: (action: {type: string, payload: any}) => void
-
+    store: StoreType
 }
-const Profile: React.FC<ProfilePropsType> = ({state, dispatch}) => {
+const Profile: React.FC<ProfilePropsType> = ({store}) => {
+
     return (
         <div>
             <ProfileInfo />
-            <MyPosts posts={state.posts} dispatch={dispatch} />
+            <MyPosts store={store}/>
         </div>
     )
 }

@@ -2,49 +2,47 @@ import React, {ChangeEvent, useState} from 'react'
 import styles from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {addMessageAC, SendMessageAction, MessageUserType, UsersType} from "../../store/state";
+import {StoreType} from "../../store/store";
+import {sendMessageAC} from "../../store/dialogs-reducer";
 
 export type DialogTypeProps = {
-    state: {
-        users: UsersType[]
-        messages: MessageUserType[]
-    }
-    dispatch: (action: SendMessageAction) => void
+    store: StoreType
 }
 
-export const Dialogs: React.FC<DialogTypeProps> = ({state, dispatch}) => {
-
+export const Dialogs: React.FC<DialogTypeProps> = ({store}) => {
+    const users = store.getState().dialogsPage.users
+    const messages = store.getState().dialogsPage.messages
     const [message, setMessage] = useState('')
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(e.currentTarget.value)
     }
 
-    const onAddMessageHandler = () => {
-        dispatch(addMessageAC(message))
+    const onSendMessageHandler = () => {
+        store.dispatch(sendMessageAC(message))
         setMessage('')
     }
     return (
         <div className={styles.dialogs}>
             <div className={styles.dialogsItems}>
                 {
-                    state.users.map(item => <DialogItem name={item.name}
-                                                        id={item.id} />)
+                    users.map(item => <DialogItem name={item.name}
+                                                        id={item.id}/>)
                 }
 
             </div>
             <div className={styles.messages}>
                 <div>{
-                    state.messages.map(item => <Message text={item.text}
-                                                        id={item.id} />)
+                    messages.map(item => <Message text={item.text}
+                                                        id={item.id}/>)
                 }</div>
                 <div className={styles.enterMessage}>
                     <div>
                       <textarea placeholder={'Enter your message'}
                                 onChange={onChangeHandler}
-                                value={message} />
+                                value={message}/>
                     </div>
                     <div>
-                        <button onClick={onAddMessageHandler}>Send</button>
+                        <button onClick={onSendMessageHandler}>Send</button>
                     </div>
 
                 </div>

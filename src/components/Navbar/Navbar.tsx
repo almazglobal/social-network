@@ -1,16 +1,15 @@
 import React from 'react'
 import styles from './Navbar.module.css'
 import {NavLink} from 'react-router-dom'
-import {UsersType} from "../../store/state";
+import {StoreType} from "../../store/store";
 import {Friends} from "../Friends/Friends";
 
 type NavbarPropsType = {
-    state: {
-        friends: UsersType[]
-    }
+   store: StoreType
 }
 
-export const Navbar: React.FC<NavbarPropsType> = ({state}) => {
+export const Navbar: React.FC<NavbarPropsType> = ({store}) => {
+    const friends = store.getState().sidebar.friends
     return (
         <nav className={styles.nav}>
             <div className={styles.item}><NavLink to="/profile" activeClassName={styles.active}>Profile</NavLink></div>
@@ -21,7 +20,7 @@ export const Navbar: React.FC<NavbarPropsType> = ({state}) => {
             <div className={styles.friends}>
                 <h2>Friends</h2>
                 {
-                    state.friends.map(item => <Friends name={item.name} id={item.name}/>)
+                    friends.map(item => <Friends name={item.name} id={item.name}/>)
                 }
             </div>
         </nav>

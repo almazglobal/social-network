@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../DialogItem/DialogItem.module.css";
 import {NavLink} from "react-router-dom";
-import {UsersType} from "../../../store/state";
+import {UsersType} from "../../../store/store";
 
 export const DialogItem: React.FC<UsersType> = ({id, name}) => {
     return <div key={id}

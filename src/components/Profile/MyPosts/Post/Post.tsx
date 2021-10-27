@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Post.module.css'
-import {PostUserType} from "../../../../store/state";
+import {PostUserType} from "../../../../store/store";
 
 const Post: React.FC<PostUserType> = ({text, countLikes, id}) => {
         return <div key={id} className={styles.post}>
