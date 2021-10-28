@@ -3,20 +3,19 @@ import Post from "./Post/Post";
 import styles from './MyPosts.module.css'
 import {addPostAC} from "../../../store/profile-reducer";
 import {AppStoreType} from "../../../store/redux-store";
+import {PostUserType} from "../../../store/store";
 
 type MyPostsPropsType = {
-    store: AppStoreType
+    addPost: (textPost: string) => void
+    posts: PostUserType[]
 }
 
-const MyPosts: React.FC<MyPostsPropsType> = ({store}) => {
+const MyPosts: React.FC<MyPostsPropsType> = ({addPost, posts}) => {
 
-    const posts = store.getState().profilePage.posts
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
     const [textPost, setTextPost] = useState('')
     const addPostHandler = () => {
-
         if (textPost) {
-            store.dispatch(addPostAC(textPost))
+            addPost(textPost)
             setTextPost('')
         }
     }
@@ -30,8 +29,7 @@ const MyPosts: React.FC<MyPostsPropsType> = ({store}) => {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}
-                              value={textPost}
+                    <textarea value={textPost}
                               onChange={onChangeHandler} />
                 </div>
                 <div>
@@ -40,7 +38,7 @@ const MyPosts: React.FC<MyPostsPropsType> = ({store}) => {
             </div>
             <div className={styles.posts}>
                 {
-                    posts.map((item => <Post text={item.text}
+                   posts.map((item => <Post text={item.text}
                                              countLikes={item.countLikes}
                                              id={item.id} />))
                 }

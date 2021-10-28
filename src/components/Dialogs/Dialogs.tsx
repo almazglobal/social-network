@@ -4,21 +4,23 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {sendMessageAC} from "../../store/dialogs-reducer";
 import {AppStoreType} from "../../store/redux-store";
+import {MessageUserType, UsersType} from "../../store/store";
 
 export type DialogTypeProps = {
-    store: AppStoreType
+    users: UsersType[]
+    messages: MessageUserType[]
+    onSendMessage: (message: string) => void
 }
 
-export const Dialogs: React.FC<DialogTypeProps> = ({store}) => {
-    const users = store.getState().dialogsPage.users
-    const messages = store.getState().dialogsPage.messages
+export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessage}) => {
+
     const [message, setMessage] = useState('')
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(e.currentTarget.value)
     }
 
     const onSendMessageHandler = () => {
-        store.dispatch(sendMessageAC(message))
+        onSendMessage(message)
         setMessage('')
     }
     return (
