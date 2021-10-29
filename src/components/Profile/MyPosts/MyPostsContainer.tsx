@@ -1,19 +1,21 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {addPostAC} from "../../../store/profile-reducer";
 import MyPosts from "./MyPosts";
-import {StoreContext} from "../../../StoreContext";
+import {AppRootState} from "../../../store/redux-store";
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
 
-export const MyPostsContainer: React.FC = () => {
-    const store = useContext(StoreContext)
-    const posts = store.getState().profilePage.posts
-
-    let newPostElement = React.createRef<HTMLTextAreaElement>();
-    const addPost = (textPost: string) => {
-             store.dispatch(addPostAC(textPost))
+const mapStateToProps = (state: AppRootState) => {
+    return {
+        posts: state.profilePage.posts
     }
+}
 
-    return (
-        <MyPosts addPost={addPost} posts={posts}/>
-    );
-};
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        addPost: (textPost: string) => dispatch(addPostAC(textPost))
+    }
+}
+
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 

@@ -7,8 +7,8 @@ import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
 import {Settings} from './components/Settings/Settings';
 import React from "react";
-import {Navbar} from "./components/Navbar/Navbar";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 
 const  App: React.FC = () => {
 
@@ -16,7 +16,7 @@ const  App: React.FC = () => {
 
             <div className={styles.appWrapper}>
                 <Header/>
-                <Navbar />
+                <NavbarContainer />
                 <div className={styles.content}>
                     <Route path={"/dialogs"} render={()=> <DialogsContainer />}/>
                     <Route path={"/profile"} render={()=> <Profile />}/>

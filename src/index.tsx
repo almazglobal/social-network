@@ -5,7 +5,8 @@ import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import {AppRootState, store} from "./store/redux-store";
-import {Provider, StoreContext} from "./StoreContext";
+import {Provider} from "react-redux";
+
 
 
 const reRenderEntireTree = (state: AppRootState) => {

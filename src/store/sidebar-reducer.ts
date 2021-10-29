@@ -1,3 +1,4 @@
+
 const initState = {
     friends: [
         {id: '1', name: 'Alex'},

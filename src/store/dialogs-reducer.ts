@@ -19,13 +19,13 @@ const initState = {
         {id: '3', text: 'Bye'},
     ],
     users: [
-    {id: '1', name: 'Alex'},
-    {id: '2', name: 'Sasha'},
-    {id: '3', name: 'Bob'},
+        {id: '1', name: 'Alex'},
+        {id: '2', name: 'Sasha'},
+        {id: '3', name: 'Bob'},
     ]
 }
 
-export const dialogsReducer = (state = initState, action: SendMessageAction): typeof  initState => {
+export const dialogsReducer = (state = initState, action: SendMessageAction): typeof initState => {
     switch (action.type) {
         case SEND_MESSAGE: {
             const newMessage: MessageUserType = {

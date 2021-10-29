@@ -1,23 +1,24 @@
-import React, {ChangeEvent, useContext, useState} from 'react'
-import styles from './Dialogs.module.css'
-import {DialogItem} from "./DialogItem/DialogItem";
-import {Message} from "./Message/Message";
+import React, {useState} from 'react'
 import {sendMessageAC} from "../../store/dialogs-reducer";
-import {AppStoreType} from "../../store/redux-store";
+import {AppRootState} from "../../store/redux-store";
 import {Dialogs} from "./Dialogs";
-import {StoreContext} from "../../StoreContext";
+import {connect, MapDispatchToPropsFactory} from "react-redux";
+import {Dispatch} from "redux";
 
-export const DialogsContainer: React.FC = () => {
-    const store = useContext(StoreContext)
-    const users = store.getState().dialogsPage.users
-    const messages = store.getState().dialogsPage.messages
-    const [message, setMessage] = useState('')
 
-    const onSendMessage = (message: string) => {
-        store.dispatch(sendMessageAC(message))
+const mapStateToProps = (state: AppRootState) => {
+    return {
+        users: state.dialogsPage.users,
+        messages: state.dialogsPage.messages,
     }
-    return (
-       <Dialogs users={users} messages={messages} onSendMessage={onSendMessage}/>
-    )
 }
 
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        onSendMessage: (message: string) => {
+            dispatch(sendMessageAC(message))
+        }
+    }
+}
+
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)

@@ -1,13 +1,16 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import styles from './Navbar.module.css'
 import {NavLink} from 'react-router-dom'
 import {Friends} from "../Friends/Friends";
 import {AppStoreType} from "../../store/redux-store";
-import {StoreContext} from "../../StoreContext";
+import {UsersType} from "../../store/store";
 
-export const Navbar: React.FC = () => {
-    const store = useContext(StoreContext)
-    const friends = store.getState().sidebar.friends
+type NavbarPropsType = {
+   friends: UsersType[]
+}
+
+export const Navbar: React.FC<NavbarPropsType> = ({friends}) => {
+
     return (
         <nav className={styles.nav}>
             <div className={styles.item}><NavLink to="/profile" activeClassName={styles.active}>Profile</NavLink></div>
