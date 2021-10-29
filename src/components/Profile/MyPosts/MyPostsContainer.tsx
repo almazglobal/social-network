@@ -1,16 +1,10 @@
-import React, {ChangeEvent, useState} from 'react';
-import Post from "./Post/Post";
-import styles from './MyPosts.module.css'
+import React, {useContext} from 'react';
 import {addPostAC} from "../../../store/profile-reducer";
-import {AppStoreType} from "../../../store/redux-store";
 import MyPosts from "./MyPosts";
+import {StoreContext} from "../../../StoreContext";
 
-type MyPostsContainerPropsType = {
-    store: AppStoreType
-}
-
-export const MyPostsContainer: React.FC<MyPostsContainerPropsType> = ({store}) => {
-
+export const MyPostsContainer: React.FC = () => {
+    const store = useContext(StoreContext)
     const posts = store.getState().profilePage.posts
 
     let newPostElement = React.createRef<HTMLTextAreaElement>();
