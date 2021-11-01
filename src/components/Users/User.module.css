@@ -1,0 +1,17 @@
+.userWrapper {
+    display: flex;
+
+}
+
+.statusUser {
+    margin: 50px;
+}
+
+.infoUser {
+    margin: 50px 200px 0 50px;
+}
+
+.statusUser img {
+    width: 40px;
+    border-radius: 50%;
+}

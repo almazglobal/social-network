@@ -1,4 +1,3 @@
-import React from 'react'
 import {AppRootState} from "../../store/redux-store";
 import {connect} from "react-redux";
 import {Navbar} from "./Navbar";

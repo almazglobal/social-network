@@ -25,8 +25,7 @@ export const profileReducer = (state = initState, action: AddPostAction): typeof
                 text: action.payload,
                 countLikes: 0,
             }
-            state.posts.push(newPost)
-            return state
+            return {...state, posts: [...state.posts, newPost]}
         }
         default:
             return state

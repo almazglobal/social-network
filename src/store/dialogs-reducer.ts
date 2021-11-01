@@ -32,8 +32,7 @@ export const dialogsReducer = (state = initState, action: SendMessageAction): ty
                 id: state.messages.length.toString(),
                 text: action.payload,
             }
-            state.messages.push(newMessage)
-            return state
+            return {...state, messages: [...state.messages, newMessage]}
         }
         default:
             return state

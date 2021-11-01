@@ -2,8 +2,6 @@ import React, {ChangeEvent, useState} from 'react'
 import styles from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {sendMessageAC} from "../../store/dialogs-reducer";
-import {AppStoreType} from "../../store/redux-store";
 import {MessageUserType, UsersType} from "../../store/store";
 
 export type DialogTypeProps = {
@@ -28,14 +26,14 @@ export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessag
             <div className={styles.dialogsItems}>
                 {
                     users.map(item => <DialogItem name={item.name}
-                                                        id={item.id}/>)
+                                                        id={item.id} key={item.id}/>)
                 }
 
             </div>
             <div className={styles.messages}>
                 <div>{
                     messages.map(item => <Message text={item.text}
-                                                        id={item.id}/>)
+                                                        id={item.id} key={item.id}/>)
                 }</div>
                 <div className={styles.enterMessage}>
                     <div>

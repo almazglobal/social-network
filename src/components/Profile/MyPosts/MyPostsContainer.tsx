@@ -1,4 +1,3 @@
-import React from 'react';
 import {addPostAC} from "../../../store/profile-reducer";
 import MyPosts from "./MyPosts";
 import {AppRootState} from "../../../store/redux-store";

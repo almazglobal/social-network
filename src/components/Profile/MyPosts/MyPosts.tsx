@@ -1,8 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import Post from "./Post/Post";
 import styles from './MyPosts.module.css'
-import {addPostAC} from "../../../store/profile-reducer";
-import {AppStoreType} from "../../../store/redux-store";
 import {PostUserType} from "../../../store/store";
 
 type MyPostsPropsType = {
@@ -40,7 +38,7 @@ const MyPosts: React.FC<MyPostsPropsType> = ({addPost, posts}) => {
                 {
                    posts.map((item => <Post text={item.text}
                                              countLikes={item.countLikes}
-                                             id={item.id} />))
+                                             id={item.id} key={item.id} />))
                 }
             </div>
 

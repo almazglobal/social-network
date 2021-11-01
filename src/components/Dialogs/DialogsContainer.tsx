@@ -1,10 +1,8 @@
-import React, {useState} from 'react'
 import {sendMessageAC} from "../../store/dialogs-reducer";
 import {AppRootState} from "../../store/redux-store";
 import {Dialogs} from "./Dialogs";
-import {connect, MapDispatchToPropsFactory} from "react-redux";
+import {connect} from "react-redux";
 import {Dispatch} from "redux";
-
 
 const mapStateToProps = (state: AppRootState) => {
     return {
