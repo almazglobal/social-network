@@ -1,6 +1,7 @@
 import React from 'react';
-import {setUsersAC, UsersType} from "../../store/users-reducer";
+import {UsersType} from "../../store/users-reducer";
 import {User} from "./User";
+import axios from 'axios'
 
 type UsersPropsType = {
     users: UsersType[]
@@ -8,22 +9,37 @@ type UsersPropsType = {
     setUsers: (users: UsersType[]) => void
 }
 
-export const Users: React.FC<UsersPropsType> = ({users, onToggleFollow, setUsers}) => {
+export class Users extends React.Component<UsersPropsType> {
+    constructor(props: UsersPropsType) {
+        super(props)
+        this.getUsers()
+    }
 
-    return (
-        <>
-            {users.map(item => <User
-                key={item.id}
-                avatarPhoto={item.avatarPhoto}
-                fullName={item.fullName}
-                status={item.status}
-                location={item.location}
-                followed={item.followed}
-                id={item.id}
-                onToggleFollow={onToggleFollow}
-                setUsers={setUsers} />)}
-        </>
+    getUsers = () => {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            })
+    }
 
-    );
-};
+    render() {
+
+        return (
+
+            <>
+                <button onClick={this.getUsers}>Get Users</button>
+                {this.props.users.map(item => <User
+                    key={item.id}
+                    photos={item.photos}
+                    name={item.name}
+                    status={item.status}
+                    location={item.location}
+                    followed={item.followed}
+                    id={item.id}
+                    onToggleFollow={this.props.onToggleFollow} />)}
+            </>
+
+        );
+    }
+}
 
