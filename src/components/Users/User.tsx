@@ -29,7 +29,6 @@ export const User: React.FC<UserPropsType> = ({
                                               }) => {
 
 
-
     return (
         <div className={styles.userWrapper}>
             <div className={styles.statusUser}>
@@ -38,7 +37,7 @@ export const User: React.FC<UserPropsType> = ({
                 <button onClick={() => onToggleFollow(id)}>{followed ? 'followed' : 'unfollowed'}</button>
             </div>
             <div className={styles.infoUser}>
-                <span>{name}</span>
+                <div>{name}</div>
                 <span>{status}</span>
                 <span>{'location.city'}</span>
                 <span>{'location.country'}</span>
