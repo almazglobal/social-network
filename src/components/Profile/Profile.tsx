@@ -1,12 +1,15 @@
 import React from 'react'
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-
-const Profile: React.FC = () => {
+import {ProfileType} from "../../store/profile-reducer";
+type ProfileTypeProps = {
+    profile: ProfileType | null
+}
+const Profile: React.FC<ProfileTypeProps> = ({profile}) => {
 
     return (
         <div>
-            <ProfileInfo />
+            <ProfileInfo profile={profile}/>
             <MyPostsContainer />
         </div>
     )

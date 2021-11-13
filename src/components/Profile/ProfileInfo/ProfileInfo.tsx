@@ -1,12 +1,33 @@
 import React from "react";
 import styles from './ProfileInfo.module.css'
+import {ProfileType} from "../../../store/profile-reducer";
 
-export const ProfileInfo = () => {
+type ProfileInfoType = {
+    profile: ProfileType | null
+}
+export const ProfileInfo: React.FC<ProfileInfoType> = ({profile}) => {
     return (
         <div>
-            <div><img
-                src="https://s2.best-wallpaper.net/wallpaper/2560x1600/2007/Lake-calm-water-surface-reflection-mountains_2560x1600.jpg"
-                alt="halls" /></div>
+            {profile && (<div>
+                    <img
+                        src={profile.photos.small ? profile.photos.small : ''}
+                        alt="halls" />
+                    <div>
+                        {profile.fullName}
+                    </div>
+                    <div>
+                        {profile.aboutMe}
+                    </div>
+                    <div>
+                        {profile.lookingForAJob}
+                    </div>
+                    <div>
+
+                        <a href={profile.contacts.vk ? profile.contacts.vk : ''}>{profile.contacts.vk !== null ? profile.contacts.vk : ''}</a>
+                    </div>
+                </div>
+            )
+            }
             <div className={styles.descriptionWrapper}>ava+description</div>
         </div>
     )

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './User.module.css'
 import userPhoto from '../../assets/images/ava-vk-animal-91.jpg'
+import {NavLink} from 'react-router-dom';
 
 type UserPropsType = {
     photos: {
@@ -32,8 +33,10 @@ export const User: React.FC<UserPropsType> = ({
     return (
         <div className={styles.userWrapper}>
             <div className={styles.statusUser}>
-                <img src={photos.small !== null ? photos.small : userPhoto}
-                     alt="avatar" />
+                <NavLink to={`/profile/${id}`}>
+                    <img src={photos.small !== null ? photos.small : userPhoto}
+                         alt="avatar" />
+                </NavLink>
                 <button onClick={() => onToggleFollow(id)}>{followed ? 'followed' : 'unfollowed'}</button>
             </div>
             <div className={styles.infoUser}>

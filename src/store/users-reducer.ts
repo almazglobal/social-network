@@ -18,18 +18,29 @@ export type UsersStateType = {
     pageSize: number
     totalUserCount: number
     currentPage: number
+    isFetching: boolean
 }
 const initState: UsersStateType = {
     users: [],
     pageSize: 5,
     totalUserCount: 0,
     currentPage: 2,
+    isFetching: true,
 }
 
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USER_COUNT = 'SET_TOTAL_USER_COUNT';
+const TOGGLE_FETCHING = 'TOGGLE_FETCHING';
+
+export type ToggleFetchingAction = {
+    type: typeof TOGGLE_FETCHING,
+    payload: boolean,
+}
+type ToggleFetchingACType = (payload: boolean) => ToggleFetchingAction
+
+export const toggleFetching: ToggleFetchingACType = (payload: boolean) => ({type: TOGGLE_FETCHING, payload})
 
 export type ToggleFollowAction = {
     type: typeof TOGGLE_FOLLOW
@@ -37,7 +48,7 @@ export type ToggleFollowAction = {
 }
 type ToggleFollowACType = (payload: string) => ToggleFollowAction
 
-export const toggleFollowAC: ToggleFollowACType = (payload) => ({type: TOGGLE_FOLLOW, payload})
+export const toggleFollow: ToggleFollowACType = (payload) => ({type: TOGGLE_FOLLOW, payload})
 
 export type SetUsersAction = {
     type: typeof SET_USERS
@@ -45,7 +56,7 @@ export type SetUsersAction = {
 }
 type SetUsersACType = (payload: UsersType[]) => SetUsersAction
 
-export const setUsersAC: SetUsersACType = (payload) => ({type: SET_USERS, payload})
+export const setUsers: SetUsersACType = (payload) => ({type: SET_USERS, payload})
 
 export type SetCurrentPageAction = {
     type: typeof SET_CURRENT_PAGE
@@ -53,7 +64,7 @@ export type SetCurrentPageAction = {
 }
 type SetCurrentPageACType = (payload: number) => SetCurrentPageAction
 
-export const setCurrentPageAC: SetCurrentPageACType = (payload) => ({type: SET_CURRENT_PAGE, payload})
+export const setCurrentPage: SetCurrentPageACType = (payload) => ({type: SET_CURRENT_PAGE, payload})
 
 export type SetTotalUserCountAction = {
     type: typeof SET_TOTAL_USER_COUNT
@@ -61,9 +72,9 @@ export type SetTotalUserCountAction = {
 }
 type SetTotalUserCountACType = (payload: number) => SetTotalUserCountAction
 
-export const setTotalUserCountAC: SetTotalUserCountACType = (payload) => ({type: SET_TOTAL_USER_COUNT, payload})
+export const setTotalUserCount: SetTotalUserCountACType = (payload) => ({type: SET_TOTAL_USER_COUNT, payload})
 
-type MainAction = ToggleFollowAction | SetUsersAction | SetCurrentPageAction | SetTotalUserCountAction
+type MainAction = ToggleFollowAction | SetUsersAction | SetCurrentPageAction | SetTotalUserCountAction | ToggleFetchingAction
 
 export const usersReducer = (state = initState, action: MainAction): UsersStateType => {
     switch (action.type) {
@@ -78,6 +89,8 @@ export const usersReducer = (state = initState, action: MainAction): UsersStateT
             return {...state, currentPage: action.payload }
         case SET_TOTAL_USER_COUNT:
             return {...state, totalUserCount: action.payload }
+        case TOGGLE_FETCHING:
+            return {...state, isFetching: action.payload }
         default:
             return state
     }
