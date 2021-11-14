@@ -1,5 +1,4 @@
 import styles from './App.module.css'
-import Header from "./components/Header/Header";
 import {Route} from "react-router-dom";
 import {News} from './components/News/News';
 import {Music} from './components/Music/Music';
@@ -9,13 +8,14 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 const  App: React.FC = () => {
 
     return (
 
             <div className={styles.appWrapper}>
-                <Header/>
+                <HeaderContainer/>
                 <NavbarContainer />
                 <div className={styles.content}>
                     <Route path={"/dialogs"} render={()=> <DialogsContainer />}/>

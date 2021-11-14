@@ -1,7 +1,14 @@
 .header {
     grid-area: header;
     background: aqua;
+    display: flex;
+    justify-content: space-between;
 }
+
 .header img {
     width: 20px;
+}
+
+.loginBlock {
+    color: white;
 }
