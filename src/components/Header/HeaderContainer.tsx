@@ -1,9 +1,9 @@
 import React from 'react'
-import {DataAuthUserType, DataUserType, setUserData} from "../../store/auth-reducer";
+import {DataUserType, setUserData} from "../../store/auth-reducer";
 import {Header} from "./Header";
 import {connect} from "react-redux";
 import {AppRootState} from "../../store/redux-store";
-import {authMe} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 type HeaderContainerPropsType = {
     userData: DataUserType
@@ -12,7 +12,7 @@ type HeaderContainerPropsType = {
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-        authMe()
+        usersAPI.authMe()
             .then(response => {
                 if (response.data.resultCode === 0)
                     this.props.setUserData({...response.data.data, isAuth: true})

@@ -1,11 +1,10 @@
 import React from 'react';
 import {UsersType} from "../../store/users-reducer";
 import {User} from "./User";
-import axios from 'axios'
 import styles from './Users.module.css'
 import {createPages} from "../../utils/pageCreator";
 import {Preloader} from "../common/Preloader/Preloader";
-import {getUsers} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 type UsersPropsType = {
     users: UsersType[]
@@ -15,29 +14,28 @@ type UsersPropsType = {
     setTotalUserCount: (count: number) => void
     pageSize: number
     totalUserCount: number
-    currentPage: number,
-    isFetching: boolean,
+    currentPage: number
+    isFetching: boolean
+    followInProgress: string[]
     toggleFetching: (isFetching: boolean) => void
+    toggleFollowInProgress: (isFollow: {
+        userId: string,
+        isFetching: boolean,
+    }) => void
+    getUsers: (currentPage: number, pageSize: number) => void
+    getFollowUsers: (id: string) => void
+
 }
 
 export class Users extends React.Component<UsersPropsType> {
 
-    getUsers = (currentPage: number) => {
-        this.props.toggleFetching(true)
-        getUsers(currentPage, this.props.pageSize).then(data => {
-            this.props.toggleFetching(false)
-            this.props.setUsers(data.items)
-            this.props.setTotalUserCount(data.totalCount)
-        })
-    }
-
     componentDidMount() {
-        this.getUsers(this.props.currentPage)
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (item: number) => {
         this.props.setCurrentPage(item)
-        this.getUsers(item)
+        this.props.getUsers(item, this.props.pageSize)
     }
 
     render() {
@@ -63,7 +61,11 @@ export class Users extends React.Component<UsersPropsType> {
                     location={item.location}
                     followed={item.followed}
                     id={item.id}
-                    onToggleFollow={this.props.toggleFollow} />)}
+                    onToggleFollow={this.props.toggleFollow}
+                    toggleFollowInProgress={this.props.toggleFollowInProgress}
+                    followInProgress={this.props.followInProgress}
+                    getFollowUsers={this.props.getFollowUsers}
+                />)}
             </>
 
         );

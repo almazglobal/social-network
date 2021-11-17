@@ -11,16 +11,36 @@ const instance = axios.create({
         },
 })
 
-export const getUsers = (currentPage = 1, pageSize = 5) => {
-    return instance.get<DataAuthUserType>(`users?page=${currentPage}&count=${pageSize}`)
-        .then(response => response.data)
+
+export const usersAPI = {
+
+    getUsers(currentPage = 1, pageSize = 5) {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+            .then(response => response.data)
+    },
+
+    authMe() {
+        return instance.get(`auth/me`)
+    },
+
+    getUserProfile(userId: string) {
+        return instance.get(`profile/${userId}`)
+            .then(response => response.data)
+    },
+    setFollow(id:string) {
+        return instance.post(`follow/${id}`)
+            .then(response => response.data)
+    },
+    setUnFollow(id:string) {
+        return instance.delete(`follow/${id}`)
+            .then(response => response.data)
+    },
+    getStatusFollow(id:string) {
+
+        return instance.get(`follow/${id}`)
+            .then(response => response.data)
+    },
+
 }
 
-export const authMe = () => {
-    return instance.get(`auth/me`)
-}
 
-export const getUserProfile = (userId: string) => {
-    return instance.get(`${userId}`)
-        .then(response => response.data)
-}
