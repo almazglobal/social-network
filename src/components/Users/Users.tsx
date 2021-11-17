@@ -5,6 +5,7 @@ import axios from 'axios'
 import styles from './Users.module.css'
 import {createPages} from "../../utils/pageCreator";
 import {Preloader} from "../common/Preloader/Preloader";
+import {getUsers} from "../../api/api";
 
 type UsersPropsType = {
     users: UsersType[]
@@ -23,12 +24,11 @@ export class Users extends React.Component<UsersPropsType> {
 
     getUsers = (currentPage: number) => {
         this.props.toggleFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`, {withCredentials: true})
-            .then(response => {
-                this.props.toggleFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalUserCount(response.data.totalCount)
-            })
+        getUsers(currentPage, this.props.pageSize).then(data => {
+            this.props.toggleFetching(false)
+            this.props.setUsers(data.items)
+            this.props.setTotalUserCount(data.totalCount)
+        })
     }
 
     componentDidMount() {
@@ -48,13 +48,13 @@ export class Users extends React.Component<UsersPropsType> {
             <>
                 <div>
                     {pages.map(item => {
-                       return <span onClick={ () => this.onPageChanged(item)}
-                                    className={this.props.currentPage === item ? styles.selectedPage: ''}
-                                    key={item}>{item}
+                        return <span onClick={() => this.onPageChanged(item)}
+                                     className={this.props.currentPage === item ? styles.selectedPage : ''}
+                                     key={item}>{item}
                        </span>
                     })}
                 </div>
-                {this.props.isFetching && <Preloader/>}
+                {this.props.isFetching && <Preloader />}
                 {this.props.users.map(item => <User
                     key={item.id}
                     photos={item.photos}
