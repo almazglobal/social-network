@@ -3,14 +3,17 @@ import styles from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {MessageUserType, UsersType} from "../../store/store";
+import {Redirect} from "react-router-dom";
+import {Login} from "../Login/Login";
 
 export type DialogTypeProps = {
     users: UsersType[]
     messages: MessageUserType[]
     onSendMessage: (message: string) => void
+    isAuth: boolean
 }
 
-export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessage}) => {
+export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessage, isAuth}) => {
 
     const [message, setMessage] = useState('')
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -21,6 +24,9 @@ export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessag
         onSendMessage(message)
         setMessage('')
     }
+
+    if (!isAuth) return <Redirect to={'/login'}/>
+
     return (
         <div className={styles.dialogs}>
             <div className={styles.dialogsItems}>

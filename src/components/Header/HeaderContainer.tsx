@@ -1,5 +1,5 @@
 import React from 'react'
-import {DataUserType, setUserData} from "../../store/auth-reducer";
+import {DataUserType, setUserData, setUserDataThunkCreator} from "../../store/auth-reducer";
 import {Header} from "./Header";
 import {connect} from "react-redux";
 import {AppRootState} from "../../store/redux-store";
@@ -7,16 +7,12 @@ import {usersAPI} from "../../api/api";
 
 type HeaderContainerPropsType = {
     userData: DataUserType
-    setUserData: (userData: DataUserType) => void
+    setUserData: () => void
 }
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
-        usersAPI.authMe()
-            .then(response => {
-                if (response.data.resultCode === 0)
-                    this.props.setUserData({...response.data.data, isAuth: true})
-            })
+        this.props.setUserData();
     }
 
     render() {
@@ -32,5 +28,5 @@ const mapStateToProps = (state: AppRootState) => {
     }
 }
 
-export default connect(mapStateToProps, {setUserData})(HeaderContainer)
+export default connect(mapStateToProps, {setUserData: setUserDataThunkCreator})(HeaderContainer)
 

@@ -8,6 +8,7 @@ const mapStateToProps = (state: AppRootState) => {
     return {
         users: state.dialogsPage.users,
         messages: state.dialogsPage.messages,
+        isAuth: state.authUser.isAuth
     }
 }
 

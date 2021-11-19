@@ -1,5 +1,7 @@
 import {PostUserType} from "./store";
 import {SetUsersAction, ToggleFollowAction} from "./users-reducer";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -71,5 +73,14 @@ export const profileReducer = (state = initState, action: MainAction): typeof in
         }
         default:
             return state
+    }
+}
+
+export const setUserProfileThunkCreator = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        usersAPI.getUserProfile(userId)
+            .then(data => {
+                dispatch(setUserProfile(data))
+            })
     }
 }

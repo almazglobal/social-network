@@ -1,3 +1,6 @@
+import {usersAPI} from "../api/api";
+import {Dispatch} from "redux";
+
 const SET_USER_DATA = 'SET_USER_DATA'
 
 export type SetUserDataAction = {
@@ -42,4 +45,12 @@ export const authReducer = (state = initState, action: MainAction): typeof initS
         default:
             return state
     }
+}
+
+export const setUserDataThunkCreator = () => {
+    return (dispatch: Dispatch) => usersAPI.authMe()
+        .then(response => {
+            if (response.data.resultCode === 0)
+                dispatch(setUserData({...response.data.data, isAuth: true}))
+        })
 }
