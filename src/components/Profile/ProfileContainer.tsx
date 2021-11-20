@@ -2,9 +2,9 @@ import React from 'react'
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppRootState} from "../../store/redux-store";
-import {ProfileType, setUserProfile, setUserProfileThunkCreator} from "../../store/profile-reducer";
+import {ProfileType, setUserProfileThunkCreator} from "../../store/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {usersAPI} from "../../api/api";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type PathParamsType = {
     userId: string,
@@ -35,11 +35,14 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     }
 }
 
+const AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+
 const mapStateToProps = (state: AppRootState) => {
     return {
         profile: state.profilePage.profile,
-        isAuth: state.authUser.isAuth
     }
 }
-const ProfileContainerWithUrl = withRouter(ProfileContainer)
+
+
+const ProfileContainerWithUrl = withRouter(AuthRedirectComponent)
 export default connect(mapStateToProps, {setUserProfile: setUserProfileThunkCreator})(ProfileContainerWithUrl)

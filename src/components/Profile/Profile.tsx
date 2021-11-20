@@ -5,10 +5,8 @@ import {ProfileType} from "../../store/profile-reducer";
 import {Redirect} from "react-router-dom";
 type ProfileTypeProps = {
     profile: ProfileType | null
-    isAuth: boolean
 }
-const Profile: React.FC<ProfileTypeProps> = ({profile, isAuth}) => {
-    if (!isAuth) return <Redirect to={'/login'}/>
+const Profile: React.FC<ProfileTypeProps> = ({profile}) => {
     return (
         <div>
             <ProfileInfo profile={profile}/>

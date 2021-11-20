@@ -7,7 +7,7 @@ const instance = axios.create({
     headers:
         {
             'API-KEY':
-                '2faeeadf-a972-43b3-9979-4b95c4b5cd8d'
+                '45e50546-81c9-440d-b330-e82f67461c3f'
         },
 })
 

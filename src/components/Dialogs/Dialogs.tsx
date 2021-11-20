@@ -3,8 +3,7 @@ import styles from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {MessageUserType, UsersType} from "../../store/store";
-import {Redirect} from "react-router-dom";
-import {Login} from "../Login/Login";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export type DialogTypeProps = {
     users: UsersType[]
@@ -24,8 +23,6 @@ export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessag
         onSendMessage(message)
         setMessage('')
     }
-
-    if (!isAuth) return <Redirect to={'/login'}/>
 
     return (
         <div className={styles.dialogs}>
@@ -57,4 +54,5 @@ export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessag
         </div>
     )
 }
+
 
