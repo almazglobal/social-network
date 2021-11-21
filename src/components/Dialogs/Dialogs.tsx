@@ -9,10 +9,9 @@ export type DialogTypeProps = {
     users: UsersType[]
     messages: MessageUserType[]
     onSendMessage: (message: string) => void
-    isAuth: boolean
 }
 
-export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessage, isAuth}) => {
+export const Dialogs: React.FC<DialogTypeProps> = ({users,messages, onSendMessage}) => {
 
     const [message, setMessage] = useState('')
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {

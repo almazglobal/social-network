@@ -11,6 +11,8 @@ import {
     toggleFollow,
     toggleFollowInProgress
 } from "../../store/users-reducer";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 const mapStateToProps = (state: AppRootState) => {
@@ -34,7 +36,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }*/
 
-export const UsersContainer = connect(mapStateToProps,
+export const UsersContainer = compose<any>(connect(mapStateToProps,
     {
         toggleFollow,
         setUsers,
@@ -44,4 +46,5 @@ export const UsersContainer = connect(mapStateToProps,
         toggleFollowInProgress,
         getUsers: getUsersThunkCreator,
         getFollowUsers: getFollowUsersThunkCreator,
-    })(Users)
+    }),
+    withAuthRedirect)(Users)
