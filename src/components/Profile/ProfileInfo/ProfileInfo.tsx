@@ -1,17 +1,21 @@
 import React from "react";
 import styles from './ProfileInfo.module.css'
 import {ProfileType} from "../../../store/profile-reducer";
+import {ProfileStatus} from "../ProfileStatus/ProfileStatus";
 
 type ProfileInfoType = {
     profile: ProfileType | null
+    status: string
+    updateUserStatusProfile: (status: string) => void
 }
-export const ProfileInfo: React.FC<ProfileInfoType> = ({profile}) => {
+export const ProfileInfo: React.FC<ProfileInfoType> = ({profile, status, updateUserStatusProfile}) => {
     return (
         <div>
+            <ProfileStatus status={status} updateUserStatusProfile={updateUserStatusProfile}/>
             {profile && (<div>
                     <img
                         src={profile.photos.small ? profile.photos.small : ''}
-                        alt="halls" />
+                        alt="halls"/>
                     <div>
                         {profile.fullName}
                     </div>

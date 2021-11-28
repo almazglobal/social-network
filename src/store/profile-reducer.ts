@@ -1,10 +1,20 @@
 import {PostUserType} from "./store";
 import {SetUsersAction, ToggleFollowAction} from "./users-reducer";
 import {Dispatch} from "redux";
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const GET_STATUS_PROFILE = 'GET_STATUS_PROFILE'
+
+export type GetStatusProfileAction = {
+    type: typeof GET_STATUS_PROFILE
+    payload: string
+}
+type GetStatusProfileACType = (payload: string) => GetStatusProfileAction
+
+export const getUserStatusProfile: GetStatusProfileACType = (payload) => ({type: GET_STATUS_PROFILE, payload})
+
 
 export type SetUserProfileAction = {
     type: typeof SET_USER_PROFILE
@@ -54,9 +64,20 @@ const initState = {
         {id: '2', text: 'React rules!', countLikes: 100500}
     ] as PostType[],
     profile: null as ProfileType | null,
+    status: ''
 }
 
-type MainAction = AddPostAction | SetUserProfileAction
+export type ResponseData<T> = {
+    resultCode: number
+    messages: string[],
+    data: T,
+}
+
+export type StatusUserProfile = {
+    status: string
+}
+
+type MainAction = GetStatusProfileAction | AddPostAction | SetUserProfileAction
 
 export const profileReducer = (state = initState, action: MainAction): typeof initState => {
     switch (action.type) {
@@ -71,6 +92,9 @@ export const profileReducer = (state = initState, action: MainAction): typeof in
         case SET_USER_PROFILE: {
             return {...state, profile: action.payload}
         }
+        case GET_STATUS_PROFILE: {
+            return {...state, status: action.payload}
+        }
         default:
             return state
     }
@@ -78,9 +102,30 @@ export const profileReducer = (state = initState, action: MainAction): typeof in
 
 export const setUserProfileThunkCreator = (userId: string) => {
     return (dispatch: Dispatch) => {
-        usersAPI.getUserProfile(userId)
+        profileAPI.getUserProfile(userId)
             .then(data => {
                 dispatch(setUserProfile(data))
+            })
+
+    }
+}
+
+export const getUserStatusProfileThunkCreator = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getStatus(userId)
+            .then(data => {
+                dispatch(getUserStatusProfile(data))
+            })
+    }
+}
+
+export const updateUserStatusProfileThunkCreator = (status: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.updateStatus(status)
+            .then(data => {
+                debugger
+                if (data.resultCode === 0)
+                dispatch(getUserStatusProfile(status))
             })
     }
 }

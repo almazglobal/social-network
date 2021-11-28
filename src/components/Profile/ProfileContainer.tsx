@@ -2,7 +2,12 @@ import React from 'react'
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppRootState} from "../../store/redux-store";
-import {ProfileType, setUserProfileThunkCreator} from "../../store/profile-reducer";
+import {
+    getUserStatusProfileThunkCreator,
+    ProfileType,
+    setUserProfileThunkCreator,
+    updateUserStatusProfileThunkCreator
+} from "../../store/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
@@ -13,7 +18,10 @@ type PathParamsType = {
 
 type ProfileContainerPropsType = RouteComponentProps<PathParamsType> & {
     profile: ProfileType | null
+    status: string
     setUserProfile: (userId: string) => void
+    getUserStatusProfile: (userId: string) => void
+    updateUserStatusProfile: (status: string) => void
 }
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
@@ -24,6 +32,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
             userId = '2'
         }
         this.props.setUserProfile(userId)
+        this.props.getUserStatusProfile(userId)
     }
 
     render() {
@@ -38,11 +47,16 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 const mapStateToProps = (state: AppRootState) => {
     return {
         profile: state.profilePage.profile,
+        status: state.profilePage.status,
     }
 }
 
 export default compose<any>(
-    connect(mapStateToProps, {setUserProfile: setUserProfileThunkCreator}),
+    connect(mapStateToProps, {
+        setUserProfile: setUserProfileThunkCreator,
+        getUserStatusProfile: getUserStatusProfileThunkCreator,
+        updateUserStatusProfile: updateUserStatusProfileThunkCreator,
+    }),
     withRouter,
     withAuthRedirect,
 )(ProfileContainer);

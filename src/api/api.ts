@@ -1,5 +1,6 @@
 import axios from "axios";
 import {DataAuthUserType} from "../store/auth-reducer";
+import {ResponseData} from "../store/profile-reducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -41,6 +42,21 @@ export const usersAPI = {
             .then(response => response.data)
     },
 
+}
+
+export const profileAPI = {
+    getUserProfile(userId: string) {
+        return instance.get(`profile/${userId}`)
+            .then(response => response.data)
+    },
+    getStatus(userId: string) {
+        return instance.get(`profile/status/${userId}`)
+            .then(response => response.data)
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status`, {status})
+            .then(response => response.data)
+    }
 }
 
 
